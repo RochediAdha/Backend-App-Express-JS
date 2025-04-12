@@ -1,0 +1,99 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Akun {
+  id         Int         @id @default(autoincrement()) @db.Integer
+  username   String      @unique @db.VarChar(64)
+  password   String      @db.VarChar(256)
+  email      String      @db.VarChar(256)
+  nama       String      @db.VarChar(128)
+  token      String?     @db.VarChar(128)
+  created_at DateTime    @db.Timestamp(6)
+  updated_at DateTime    @db.Timestamp(6)
+  deleted_at DateTime?   @db.Timestamp(6)
+  AkunPeran  AkunPeran[]
+
+  @@map("akun")
+}
+
+model Peran {
+  id         Int         @id @default(autoincrement()) @db.Integer
+  nama       String      @unique @db.VarChar(64)
+  deskripsi  String?     @db.VarChar(256)
+  created_at DateTime    @db.Timestamp(6)
+  updated_at DateTime    @db.Timestamp(6)
+  deleted_at DateTime?   @db.Timestamp(6)
+  AkunPeran  AkunPeran[]
+  PeranMenu  PeranMenu[]
+
+  @@map("peran")
+}
+
+model menu {
+  id         Int         @id @default(autoincrement()) @db.Integer
+  nama       String      @unique @db.VarChar(128)
+  url        String      @unique @db.VarChar(128)
+  parent     Int?        @db.Integer
+  icon       String?     @db.VarChar(128)
+  order      Int?        @db.Integer
+  created_at DateTime    @db.Timestamp(6)
+  updated_at DateTime    @db.Timestamp(6)
+  deleted_at DateTime?   @db.Timestamp(6)
+  PeranMenu  PeranMenu[]
+
+  @@map("menu")
+}
+
+model AkunPeran {
+  id         Int       @id @default(autoincrement()) @db.Integer
+  akun_id    Int       @db.Integer
+  peran_id   Int       @db.Integer
+  identitas  Int       @db.Integer
+  created_at DateTime  @db.Timestamp(6)
+  updated_at DateTime  @db.Timestamp(6)
+  deleted_at DateTime? @db.Timestamp(6)
+
+  // Relation
+  akun  Akun  @relation(fields: [akun_id], references: [id])
+  peran Peran @relation(fields: [peran_id], references: [id])
+
+  @@unique([akun_id, peran_id])
+  @@map("akun_peran")
+}
+
+model PeranMenu {
+  id       Int @id @default(autoincrement()) @db.Integer
+  peran_id Int @db.Integer
+  menu_id  Int @db.Integer
+
+  // CRUD
+  c Boolean @default(false)
+  r Boolean @default(false)
+  u Boolean @default(false)
+  d Boolean @default(false)
+
+  // Relation
+  peran Peran @relation(fields: [peran_id], references: [id])
+  menu  menu  @relation(fields: [menu_id], references: [id])
+
+  // Timestamp
+  created_at DateTime  @db.Timestamp(6)
+  updated_at DateTime  @db.Timestamp(6)
+  deleted_at DateTime? @db.Timestamp(6)
+
+  // Unique constraint on peran_id & menu_id
+  @@unique([peran_id, menu_id])
+  @@map("peran_menu")
+}
