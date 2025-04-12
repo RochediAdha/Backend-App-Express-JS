@@ -64,11 +64,14 @@ Repositori ini merupakan proyek pembelajaran untuk membangun aplikasi backend me
 ```
 ├── prisma/                 # Skema dan migrasi database
 ├── src/
+|   |── appliation/         # File aplikasi
 │   ├── controllers/        # Logika bisnis dan kontroler
+│   ├── error/              # Error handling
 │   ├── middlewares/        # Middleware kustom
-│   ├── models/             # Definisi model data
-│   ├── routes/             # Definisi routing
-│   └── app.js              # Inisialisasi aplikasi Express
+│   ├── route/              # Definisi routing
+│   ├── service/            # Definisi model data
+│   ├── validation          # Validasi
+│   └── main.js             # Inisialisasi aplikasi Express
 ├── test/                   # Pengujian unit dan integrasi
 ├── .env.example            # Contoh konfigurasi lingkungan
 ├── docker-compose.yaml     # Konfigurasi Docker Compose
