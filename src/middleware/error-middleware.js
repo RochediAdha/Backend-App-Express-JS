@@ -1,26 +1,26 @@
 import { ResponseError } from "../error/response-error.js";
+import { logger } from "../application/logging.js";
 
-const errorMiddleware = async (err, req, res, next) => {
+const errorMiddleware = (err, req, res, next) => {
   if (!err) {
     next();
     return;
   }
 
   if (err instanceof ResponseError) {
-    res
-      .status(400)
-      .json({
-        errors: err.status,
-      })
-      .end();
-  } else {
-    res
-      .status(400)
-      .json({
-        errors: err.status,
-      })
-      .end();
+    const status =
+      typeof err.status === "number" && err.status >= 400 && err.status <= 599
+        ? err.status
+        : 400;
+    return res.status(status).json({
+      errors: err.message,
+    });
   }
+
+  logger.error(err);
+  return res.status(500).json({
+    errors: "Internal Server Error",
+  });
 };
 
 export { errorMiddleware };

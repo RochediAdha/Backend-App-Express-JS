@@ -41,7 +41,7 @@ model Peran {
   @@map("peran")
 }
 
-model menu {
+model Menu {
   id         Int         @id @default(autoincrement()) @db.Integer
   nama       String      @unique @db.VarChar(128)
   url        String      @unique @db.VarChar(128)
@@ -86,7 +86,7 @@ model PeranMenu {
 
   // Relation
   peran Peran @relation(fields: [peran_id], references: [id])
-  menu  menu  @relation(fields: [menu_id], references: [id])
+  menu  Menu  @relation(fields: [menu_id], references: [id])
 
   // Timestamp
   created_at DateTime  @db.Timestamp(6)

@@ -1,7 +1,7 @@
 services:
   postgres:
     image: postgres:latest
-    container_name: banckend_app
+    container_name: backend_app_postgres
     restart: always
     environment:
       POSTGRES_USER: postgres

@@ -51,7 +51,7 @@ Repositori ini merupakan proyek pembelajaran untuk membangun aplikasi backend me
    npm run dev
    ```
 
-   Aplikasi akan berjalan di `http://localhost:3000` secara default.
+   Aplikasi akan berjalan di `http://localhost:3000` secara default (ubah dengan variabel `PORT` di `.env`).
 
 5. (Opsional) Jalankan dengan Docker:
 
@@ -62,21 +62,21 @@ Repositori ini merupakan proyek pembelajaran untuk membangun aplikasi backend me
 ## 📁 Struktur Proyek
 
 ```
-├── prisma/                 # Skema dan migrasi database
+├── prisma/                 # Skema, migrasi, dan seed database
 ├── src/
-|   |── appliation/         # File aplikasi
-│   ├── controllers/        # Logika bisnis dan kontroler
-│   ├── error/              # Error handling
-│   ├── middlewares/        # Middleware kustom
-│   ├── route/              # Definisi routing
-│   ├── service/            # Definisi model data
-│   ├── validation          # Validasi
-│   └── main.js             # Inisialisasi aplikasi Express
-├── test/                   # Pengujian unit dan integrasi
-├── .env.example            # Contoh konfigurasi lingkungan
-├── docker-compose.yaml     # Konfigurasi Docker Compose
-├── package.json            # Informasi proyek dan dependensi
-└── README.md               # Dokumentasi proyek
+│   ├── application/        # App Express, database, logging
+│   ├── controller/         # Handler HTTP
+│   ├── error/              # Kelas error aplikasi
+│   ├── middleware/         # Auth, error middleware
+│   ├── route/              # Router publik & privat
+│   ├── service/            # Logika bisnis & akses data
+│   ├── validation/         # Skema Joi
+│   └── main.js             # Entry point server
+├── test/                   # Jest + Supertest
+├── .env.example
+├── docker-compose.yaml
+├── package.json
+└── README.md
 ```
 
 ## 📌 Teknologi yang Digunakan
@@ -93,6 +93,6 @@ Kontribusi sangat terbuka! Silakan fork repositori ini dan buat pull request unt
 
 ## 📄 Lisensi
 
-Proyek ini dilisensikan di bawah [MIT License](LICENSE).
+Proyek ini dilisensikan di bawah **ISC** (sesuai `package.json`).
 
 ---

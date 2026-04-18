@@ -9,7 +9,10 @@ const methodToPermission = {
 };
 
 export const authMiddleware = async (req, res, next) => {
-  const token = req.get("Authorization");
+  let token = req.get("Authorization");
+  if (token?.startsWith("Bearer ")) {
+    token = token.slice(7).trim();
+  }
 
   if (!token) {
     return res.status(401).json({
